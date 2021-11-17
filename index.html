@@ -16,6 +16,9 @@
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+
     <!-- Main CSS -->
     <link href="./css/main.css" rel="stylesheet">
 
@@ -24,110 +27,94 @@
   <body>
     <div class="container-fluid">
       <div class="row main-container">
+        
         <section class="col-lg-6">
-          <div class="profile-bg">
-            <!-- <div class="profile-bg-1">
+          <!-- Profile Image Section -->
+          <div class="profile-image-section">
+            <div class="profile-bg-1 bg-anim-1">
             </div>
-            <div class="profile-bg-2">
-            </div> -->
-          </div>
-          <div class="profile-photo">
-            <img src="./img/profile-photo.png" class="img-fluid">
+            <div class="profile-bg-2 bg-anim-2">
+            </div>
+            <div class="profile-image">
+              <img src="./img/profile-image.png" class="img-fluid">
+            </div>
           </div>
         </section>
 
         <section class="col-lg-6">
+          <!-- Profile Info Section -->
           <div class="profile-info-section">
+            <!-- Profile Info -->
             <div class="profile-info">
               <h1 class="display-2 main-heading">HI there!</h1>
-              <h2 class="display-6 sub-heading">I am Prasanna Kunwar, a UI/UX designer</h2>
+              <h2 class="display-6 sub-heading" id="profile-intro">I am Prasanna Kunwar, a UI/UX designer</h2>
               <a href="#" class="btn btn-outline-light">My Projects</a>
             </div>
 
-            <div class="cc-wrapper">
-              <div class="cc" id="custom-carousel">
-                <!-- Custom Carousel Items to be populated through JS -->
+            <!-- Custom Swiper Carousel -->
+            <div class="swiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide cc-item">
+                  <a href="#"><i class="fab fa-behance"></i><br>Behance</a>
+                </div>
+                <div class="swiper-slide cc-item">
+                  <a href="#"><i class="fab fa-linkedin-in"></i><br>LinkedIn</a>
+                </div>
+                <div class="swiper-slide cc-item">
+                  <a href="#"><i class="fab fa-instagram"></i><br>Instagram</a>
+                </div>
+                <div class="swiper-slide cc-item">
+                  <a href="#"><i class="fab fa-youtube"></i><br>YouTube</a>
+                </div>
+                <div class="swiper-slide cc-item">
+                  <a href="#"><i class="fab fa-dribbble"></i><br>Dribble</a>
+                </div>
               </div>
             </div>
-
           </div>
         </section>
+
       </div>
     </div>
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+    <!-- TypeIt JS -->
+    <script src="https://unpkg.com/typeit@8.0.7/dist/index.umd.js"></script>
+
     <!-- Custom Script -->
     <script>
-      // Variables to store all the Profile Links
-      let behance_link = "#";
-      let linkedin_link = "#";
-      let instagram_link = "#";
-      let youtube_link = "#";
-      let dribble_link = "#";
+      // Custom Swiper Carousel Settings
+      const swiper = new Swiper('.swiper', {
+        // Optional parameters
+        effect: 'creative',
+        creativeEffect: {
+          limitProgress: 5,
+          prev: {
+            translate: ['-8rem', '2rem', '-100px'],
+            origin: 'center',
+            opacity: 0.7,
+          },
+          next: {
+            translate: ['8rem', '2rem', '-100px'],
+            origin: 'center',
+            opacity: 0.7,
+          },
+        },
+      });
+      swiper.slideNext();
+      swiper.slideNext();
 
-      // Variable to store Carousel Rotation Interval in Milliseconds
-      let carouselRotateInterval = 3000; // Rotate in every 3 seconds
-
-      // Create Carousel Item 1
-      let item1 = document.createElement("div");
-      item1.innerHTML = '<a href="' + behance_link + '"><i class="fab fa-behance"></i><br>Behance</a>';
-      // Create Carousel Item 2
-      let item2 = document.createElement("div");
-      item2.innerHTML = '<a href="' + linkedin_link + '"><i class="fab fa-linkedin-in"></i><br>LinkedIn</a>';
-      // Create Carousel Item 3
-      let item3 = document.createElement("div");
-      item3.innerHTML = '<a href="' + instagram_link + '"><i class="fab fa-instagram"></i><br>Instagram</a>';
-      // Create Carousel Item 4
-      let item4 = document.createElement("div");
-      item4.innerHTML = '<a href="' + youtube_link + '"><i class="fab fa-youtube"></i><br>YouTube</a>';
-      // Create Carousel Item 5
-      let item5 = document.createElement("div");
-      item5.innerHTML = '<a href="' + dribble_link + '"><i class="fab fa-dribbble"></i><br>Dribble</a>';
-      
-      // Get hold of our Custom Carousel
-      let carousel = document.getElementById("custom-carousel");
-      // Create an array to store all the Carousel Items
-      let items = [item1, item2, item3, item4, item5];
-
-      // Append the 5 Intial Carousel Items to our Custom Carousel with their corresponding Class Names
-      for (let i=0; i<items.length; i++) {
-        // Add base class name for the item
-        items[i].classList.add("cc-item");
-        // Add numbered class name for the item
-        let itemClassName = "cc-item-" + (i+1).toString();
-        items[i].classList.add(itemClassName);
-        // Append the item to our carousel
-        carousel.appendChild(items[i]);
-      }
-
-      // Rotate the Custom Carousel during each Carousel Rotation Interval
-      setInterval(function() {
-          rotateCustomCarousel(items);
-      }, carouselRotateInterval);
-
-      // Function to rotate the Custom Carousel
-      function rotateCustomCarousel(carousel_items) {
-        // Get the class name for the last carousel item
-        let lastClassName = carousel_items[carousel_items.length - 1].classList[1];
-        // Create a variable to store the numbered class name for the current carousel item
-        let currentClassName = "";
-        // Loop through the carousel items in descending order
-        for (let i=carousel_items.length - 1; i>=0; i--) {
-          // Remove the numbered class name from the current carousel item
-          currentClassName = carousel_items[i].classList[1];
-          carousel_items[i].classList.remove(currentClassName);
-          
-          // Replace the numbered class name for the current carousel item with the previous carousel item
-          if (i == 0) {
-            carousel_items[i].classList.add(lastClassName); 
-          } else {
-            carousel_items[i].classList.add(carousel_items[i-1].classList[1]);
-          }
-        }
-      }
-
+      // Type the Profile Intro of the page
+      new TypeIt("#profile-intro", {
+        speed: 75,
+      })
+      .go();
     </script>
+
   </body>
 </html>
